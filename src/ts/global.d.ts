@@ -1,3 +1,1 @@
-window.addEventListener('load', () => {
-    let app = new APP()
-})
+declare module '*.scss'

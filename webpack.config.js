@@ -9,13 +9,15 @@ const isProduction = process.env.NODE_ENV == 'production'
 const stylesHandler = 'style-loader'
 
 const config = {
-    entry: './src/index.ts',
+    entry: './src/ts/index.ts',
     output: {
         path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js',
     },
     devServer: {
         open: true,
         host: 'localhost',
+        hot: true,
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -64,6 +66,16 @@ const config = {
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
+    },
+    devtool: 'source-map',
+    optimization: {
+        innerGraph: true,
+    },
+    cache: {
+        type: 'filesystem',
+        buildDependencies: {
+            config: [__filename],
+        },
     },
 }
 
