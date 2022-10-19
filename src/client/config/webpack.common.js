@@ -1,75 +1,76 @@
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
-    entry: './src/client/ts/index.ts', // file used as entry point
-    module: {
-        rules: [
-            {
-                test: /\.(ts|tsx)$/i,
-                loader: 'ts-loader',
-                exclude: ['/node_modules/'],
-            },
+	entry: './src/client/ts/index.ts', // file used as entry point
 
-            {
-                test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-                type: 'asset',
-            },
-            {
-                test: /\.(vs|fs|glsl|glb)$/,
-                type: 'asset/resource',
-                exclude: ['/node_modules/'],
-                // type: 'asset/source',
-                use: [
-                    'raw-loader',
-                    {
-                        loader: 'glslify-loader',
-                        options: {
-                            transform: [['glslify-hex'], ['glslify-import']],
-                            basedir: './src/glsl',
-                        },
-                    },
-                ],
-            },
-            // {
-            //     test: /\.(js|jsx)$/i,
-            //     exclude: '/node_modules',
-            //     use: {
-            //         loader: 'babel-loader',
-            //         options: {
-            //             presets: ['@babel/env'],
-            //             plugins: ['@babel/plugin-proposal-class-properties'],
-            //         },
-            //     },
-            // },
-        ],
-    },
-    resolve: {
-        extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
-        // modules: [path.resolve(__dirname, 'node_modules'), 'node_modules'],
-    },
-    devtool: 'source-map',
-    optimization: {
-        innerGraph: true,
-    },
+	module: {
+		rules: [
+			{
+				test: /\.(ts|tsx)$/i,
+				loader: 'ts-loader',
+				exclude: [ '/node_modules/' ]
+			},
 
-    plugins: [
-        // clean webpack plugin  removes the output path folder content
-        new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: [
-                '**/*', // remove all files and subfolders inside output path
-                // path.join(process.cwd(), 'build/**/*'), //specify a absolute path to be removed
-            ],
-        }),
-        new TerserPlugin(),
-        new HtmlWebpackPlugin({
-            title: 'Webpack App Starter',
-            filename: 'html/index.html', // output file name and folder
-            // template: '../html/index.html',
-            meta: {
-                description: 'some changes',
-            },
-        }),
-    ],
-}
+			{
+				test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
+				type: 'asset'
+			},
+			{
+				test: /\.(vs|fs|glsl|glb)$/,
+				type: 'asset/resource',
+				exclude: [ '/node_modules/' ],
+				// type: 'asset/source',
+				use: [
+					'raw-loader',
+					{
+						loader: 'glslify-loader',
+						options: {
+							transform: [ [ 'glslify-hex' ], [ 'glslify-import' ] ],
+							basedir: './src/glsl'
+						}
+					}
+				]
+			}
+			// {
+			//     test: /\.(js|jsx)$/i,
+			//     exclude: '/node_modules',
+			//     use: {
+			//         loader: 'babel-loader',
+			//         options: {
+			//             presets: ['@babel/env'],
+			//             plugins: ['@babel/plugin-proposal-class-properties'],
+			//         },
+			//     },
+			// },
+		]
+	},
+	resolve: {
+		extensions: [ '.tsx', '.ts', '.jsx', '.js', '...' ]
+		// modules: [path.resolve(__dirname, 'node_modules'), 'node_modules'],
+	},
+	devtool: 'source-map',
+	optimization: {
+		innerGraph: true
+	},
+
+	plugins: [
+		// clean webpack plugin  removes the output path folder content
+		new CleanWebpackPlugin({
+			cleanOnceBeforeBuildPatterns: [
+				'**/*' // remove all files and subfolders inside output path
+				// path.join(process.cwd(), 'build/**/*'), //specify a absolute path to be removed
+			]
+		}),
+		new TerserPlugin(),
+		new HtmlWebpackPlugin({
+			title: 'Webpack App Starter',
+			filename: 'html/index.html', // output file name and folder
+			// template: '../html/index.html',
+			meta: {
+				description: 'some changes'
+			}
+		})
+	]
+};
